@@ -186,15 +186,11 @@ def split_indexes():
 indexer()
 split_indexes()
 
-
 total_size = 0
-for f in os.listdir('.'):
-    if os.path.isfile(f):
-        size = os.path.getsize(f)
-        total_size += size
-        print(f"File: {f}, Size: {size} bytes")
+for dirpath, dirnames, filenames in os.walk('indexes'):
+    for f in filenames:
+        fp = os.path.join(dirpath, f)
+        if os.path.exists(fp):
+            total_size += os.path.getsize(fp)
 
 print(f"Total index size on disk: {total_size / 1024} KB")
-
-# index_size_on_disk = sum(os.path.getsize(f) for f in os.listdir('.') if os.path.isfile(f))
-# print(f"Total index size on disk: {index_size_on_disk / 1024} KB")

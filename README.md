@@ -12,6 +12,6 @@ Indexer.py
   
   
 Current numbers for indexer.py:  
-Number of Unique Tokens: 2,057,195
-Number of Documents: 55396
-Total size of Index on Disk: 353,825.375 KB
+Number of Unique Tokens: 2,057,195  
+Number of Documents: 55396  
+Total size of Index on Disk: 353,825.375 KB  

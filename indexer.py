@@ -56,6 +56,8 @@ def parse_json(path):
         soup = BeautifulSoup(file["content"], "html.parser")
         for tag in soup.find_all(['script', 'style']):
             tag.extract()
+
+        # weights = {'h1': 2, 'h2': 2, 'h3': 2, 'strong': 2, 'b': 2}
         file_content = soup.get_text()
     except:
         print(f"Error reading file {path}")
@@ -182,6 +184,7 @@ def split_indexes():
                         print(word + " " + str(count), file=f)
                     count += 1
         index_dict.clear()
+
 
 indexer()
 split_indexes()

@@ -162,6 +162,7 @@ def process_text(text):
 
 
 # spilts the partial_index files into 27 inverted_index files: 26 for letters and 1 for special characters
+# this helps organize the index so it's more efficient for retrieval and reduces the memory during the search
 # create a list of paths to all partial_index files
 # create a dict for tokens that start with the current relevant letter and another dict for special chars
 # read the file and eval the content (in string format) using 'ast.literal_eval() to safely eval dicts stored in partial index

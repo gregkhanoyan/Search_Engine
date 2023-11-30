@@ -19,6 +19,6 @@ Wrote a search engine from the ground up that is capable of handling tens of tho
 - The search time will also be outputted at the bottom of the window  
   
 # Deliverables for indexer.py:  
-Number of Unique Tokens: 738,246 
+Number of Unique Tokens: 738,246  
 Number of Documents: 55,397  
 Total size of Index on Disk: 266817.866 KB  

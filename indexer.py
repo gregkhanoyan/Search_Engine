@@ -19,10 +19,10 @@ hashed = SimhashIndex([], k=1)
 invertedIndex = {}
 
 
-# runs process_dev_folder()
+# runs processDevFolder()
 # write indexed docs into docs.txt
 def indexer():
-    process_dev_folder()
+    processDevFolder()
     os.chdir('../..')
     with open("docs.txt", "w") as f:
         f.write(str(docs))
@@ -31,29 +31,29 @@ def indexer():
 # processes all DEV subfolders given to us
 # os.chdir("./developer/DEV"): path to DEV
 # os.listdir(os.getcwd()) gives us a list of all subfolder inside DEV
-# processes each folder by calling process_single_directory
+# processes each folder by calling processDevJsons
 # write partial index to a file as a record to make sure not overflow the memeory in case DEV is too large
 # if invertedIndex exceeds 100000 elements, write the element to a new partial index file
-def process_dev_folder():
+def processDevFolder():
     os.chdir("./developer/DEV")
 
     count = 1
     for file in os.listdir(os.getcwd()):
         if os.path.isdir(file):
-            process_single_directory(file)
+            processDevJsons(file)
 
         if len(invertedIndex) > 100000:
-            write_partialIndex(count)
+            loadPartialIndex(count)
             count += 1
 
     if len(invertedIndex) > 0: 
-        write_partialIndex(count)
+        loadPartialIndex(count)
 
 
 # writes current invertedIndex to partial_index file and clears the current invertedIndex
 # this is to make sure that we don't overflow memory with large invertedIndex
 # encoding 'utf-8' : handle Unicode characters
-def write_partialIndex(partialIndexNumber: int):
+def loadPartialIndex(partialIndexNumber: int):
     with open("../../indexes/partial_index" + str(partialIndexNumber) + ".txt", "w", encoding='utf-8') as file:
         file.write(str(invertedIndex))
     invertedIndex.clear()
@@ -65,25 +65,25 @@ def write_partialIndex(partialIndexNumber: int):
 # adds json file to docs
 # each docs element is a dict containing 2 keys: json url and content
 # uses simhash to detect exact and near duplicate files, if file is duplicate skip the file
-# gets tfs of text from process_text()
+# gets tfs of text from processText()
 # adds tokens into invertedIndex
     # if token is already in invertedIndex -> update its tf value
         # otherwise create it
 # each word in invertedIndex holds: word, tf, docID
 # returns to the previous directory
-def process_single_directory(str):
+def processDevJsons(str):
     os.chdir(os.getcwd() + "/" + str)
     print("\nPROCESSING: " + str)
 
     for jsonFile in os.listdir(os.getcwd()):
         id = len(docs)
         docs.append({'id': id, 'url': str + '/' + jsonFile})
-        text = parse_json(jsonFile)
+        text = parseJson(jsonFile)
         hashedText = Simhash(text)
 
         if len(hashed.get_near_dups(hashedText)) == 0:
             hashed.add(jsonFile, hashedText)
-            tfDict = process_text(text)
+            tfDict = processText(text)
 
             for word in tfDict:
                 uniqueWords.add(word)
@@ -100,7 +100,7 @@ def process_single_directory(str):
 # removes script and style tags
 # sets an identifier for text within important tags
 # returns docContent string including text from file
-def parse_json(path):
+def parseJson(path):
     print("\tPROCESSING: " + path)
     docContent = ""
 
@@ -136,7 +136,7 @@ def parse_json(path):
 # 'strongtag' is removed from the word to not affect indexing
 # use math.log to smooth out high frequency word counts, +1 so there are only non-zero values
 # math.log is done so that common words are not dominant
-def process_text(text):
+def processText(text):
     text = word_tokenize(text.lower())
     porter = PorterStemmer()
     stemmedWords = [porter.stem(word) for word in text]
@@ -169,7 +169,7 @@ def process_text(text):
 # check first char and add to 'indexDict' or 'special_indexDict'
 # when token is written to inverted_index file it's also written to 'uniqueWords.txt'
 # after processing each letter, 'indexDict' is cleared to free up memory before processing next letter
-def split_indexes():
+def splitIndexes():
     partialIndexList = []
     indexDict = {}
     special_indexDict = {}
@@ -213,7 +213,7 @@ def split_indexes():
 
 # MAIN
 indexer()
-split_indexes()
+splitIndexes()
 
 totalSize = 0
 for dirpath, dirnames, filenames in os.walk('indexes'):

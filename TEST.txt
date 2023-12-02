@@ -1,0 +1,38 @@
+Improvements Made to Search Engine:
+
+- Important Word Weights: Enhanced term frequency values for important tags; fine-tuned the increase in term frequency value for these important words after testing of what value is best to increase by.
+
+- Logarithmic Term-Frequencies: Applied logarithmic scaling to term frequencies to mitigate the domination of common words, such as 'the' and 'is', ensuring they do not dominate search results. This also plays a part in calculating the TF-IDF values later/
+
+- Simhash for Duplicate Detection: Incorporated Simhash to identify and filter out exact and near-duplicate files, creating a better and more efficent index by indexing less files and not including unneccesary files.
+
+- Categorized Inverted Indexes for Search Efficency: Categorized inverted indexes for faster and efficient information retrieval for searching. Catagorized by each letter and special characters.
+
+- Removed Irrelevant HTML Tags: Extracted HTML tags ‘script’ and ‘style’ from indexed content, getting rid of irrelevant data and improving the quality of search results.
+
+- Memory-Efficient Data Retrieval: Used linecache.getline for getting specific lines from index files, optimizing memory usage during search operations.
+
+- TFIDF Matrix and Cosine Similarity for Ranking: Implemented TFIDF matrix and cosine similarity in ranking algorithms, creating better top 10 search results.
+
+Test Queries:
+
+- Machine Learning: Good query. Most results included 'machine learning'.
+- ACM: Good single-word query. Improved slightly by implementing important word weighting.
+- Facebook: Generally good, but initial results would read 'facebook' from HTML that was not readable on page, causing unexpected rankings.
+- Internships: Good query, but faced unexpected 404 page that didn't include page status 404.
+- Python: Good query with expected ranked pages.
+- Startup Company Irvine: Good query.
+- Artificial Intelligence: Good query.
+- 2019: Initially faced challenges due to HTML content. Improved by implementating important word weights.
+- Cristina Lopes: Initial rankings were not ideal. Improved by implementing important word weights.
+- Student Spotlight: Started as bad query "student" typically dominated "spotlight". Improved significantly with important word weights.
+- Master of Software Engineering: Longer query would find pages with some of the query words but rarely all words together. 2-gram and 3-gram indexing would solve this but implementing would cause lots of complexity to indexer.
+- To Be or Not to Be: Bad query due to having very general words. Again 2-gram and 3-gram could improve this but I couldn't implement it.
+- New Smartphones: Bad query, dominated by the term 'new' which would reference the common term 'news'. 2-gram and 3-gram could improve this.
+- How to Fix Bugs in My Code: Gave understandable search resultes but none came close to answering the question. Again 2-gram and 3-gram could improve this.
+- Covid: No pages found with my search engine which would give errors. Implemented try/except for handling such queries.
+- Virtual Reality: Good query, improved rankings with important word weights.
+- Register for Classes: Good query with results including words but none had the full phrase. Again 2-gram and 3-gram indexing could improve this.
+- Deadlines 2023: Good query, some pages dominated by 2023. Good performace because it gave pages from the date 2023.
+- Amazon: Good query. Ranking of pages improved with implementation of important word weights.
+- Basketball: Good search results. Not many pages found due to only searching ICS but gave expected pages.
